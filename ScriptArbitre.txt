@@ -1,0 +1,5 @@
+#!/bin/bash
+for ((file=1; file<=10; file++ ))
+do  
+  touch $file
+done
