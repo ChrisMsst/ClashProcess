@@ -12,7 +12,7 @@ int main(void)
     int pid, status, num_pid, err,i,result;
     pid = fork();
     int pid1, pid2, pid3,pid4;
-    char fichier[16] = "";
+    char fichier[8] = "";//Car il faut le .dat a la fin aussi donc 9999.dat au max
     FILE *file;
     
     if (pid == 0) {
