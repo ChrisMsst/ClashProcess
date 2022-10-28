@@ -1,5 +1,8 @@
 #!/bin/bash
-for ((file=1; file<=10; file++ ))
+
+echo "Combien de fichier voulez-vous créer?"
+read nbr
+for ((fichier=1; fichier<=nbr; fichier++ ))
 do  
-  touch $file
+  touch $fichier
 done
