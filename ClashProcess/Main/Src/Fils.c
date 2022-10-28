@@ -5,20 +5,21 @@
 #include <unistd.h>
 #include <signal.h>
 #include <fcntl.h>
+#include <string.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
-    for(i=1;i<=30;i++)
+	for (int i = 0; i < 5; i++)
 	{
-	result=0;
-	snprintf(fichier, sizeof fichier, "%d.dat", i);
-	file=fopen(fichier,"r+b");
-	if(file==NULL)
-	printf("/!\\ fichier %d inexistant\n",i);
-	else
+		printf("Je suis le fils %d il me reste %d sec avant d'envoyer un signal a mon pere\n", getpid(), i);
+		sleep(1);
+	}
+
+	kill(getppid(), SIGUSR1);
+	for (;;)
 	{
-        fread(&result,sizeof(result),1,file);
-    	printf("--> PID fils n°%d: %d\n",i,result);
-    	fclose(file);
-        }
+		printf("Je suis le fils %d je suis en vie\n", getpid());
+		//printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
+		sleep(2);
+	}
 }
