@@ -1,6 +1,7 @@
 # fonction lecture
 
 ouvrir la fenêtre terminale:
+
 -> make
 
 -> ./test & ./test2
