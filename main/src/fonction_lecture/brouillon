@@ -1,0 +1,5 @@
+for(i=1;i<=7;i++)
+    {
+    result=fonction_read(15);
+    printf("result:%d\n",result);
+    }
