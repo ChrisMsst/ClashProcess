@@ -9,11 +9,11 @@
 
 void reveil(int sig);
 
-int main(int argc)
+int main(int argc, char *argv[])
 {
-    char *argv[3]; // car il faut passer le nb de fichier en arguments
-    argv[0] = "F";
-    argv[2] = NULL;
+    char *argz[3]; // car il faut passer le nb de fichier en arguments
+    argz[0] = "F";
+    argz[2] = NULL;
     int pid, stat, pid1, pid2, pid3, pid4; // On crée toutes les variables pour stocker les pids des fils
 
     int alive = 5;
@@ -23,25 +23,23 @@ int main(int argc)
 
     if (pid == 0) // partie fils
     {
-        execv("F", argv);
+        execv("F", argz);
     }
     else // partie père
     {
         pause(); // le pere attend le signal de son fils pour en créer un autre
-        printf("J'active ta mere");
         pid1 = fork();
         if (pid1 == 0)
         {
-            printf("le 2 eme fils");
-            execv("F", argv);
+            execv("F", argz);
         }
         else
         {
-            pause();// le pere attend le signal de son fils pour en créer un autre
+            pause(); // le pere attend le signal de son fils pour en créer un autre
             pid2 = fork();
             if (pid2 == 0)
             {
-                execv("F", argv);
+                execv("F", argz);
             }
             else
             {
@@ -49,7 +47,7 @@ int main(int argc)
                 pid3 = fork();
                 if (pid3 == 0)
                 {
-                    execv("F", argv);
+                    execv("F", argz);
                 }
                 else
                 {
@@ -57,13 +55,14 @@ int main(int argc)
                     pid4 = fork();
                     if (pid4 == 0)
                     {
-                        execv("F", argv);
+                        execv("F", argz);
                     }
                     else
                     {
                         pause(); // le pere attend le signal de son fils pour passer a autre chose
-                        strcpy(argv[0], "P");
-                        execv("Pere", argv);
+                        printf("\n\n Je ssuis avant de partir dans l'autre fichier\n\n");
+                        // strcpy(argz[0], "P");// problème avec cette ligne cela fait un core dump
+                        //   execv("Pere", argz);
                     }
                 }
             }
@@ -93,9 +92,7 @@ int main(int argc)
     printf("ici on est la hein ca marche");
 }
 
-void reveil(int sig)
+void reveil(int sig) // lorsque le fils envoie le signal c'est le pere qui execute cette partie
 {
-    printf("\nJe reveil mon pere pour qu'il fasse la suite\n");
-    wait(NULL);
-    exit(0);
+    printf("\nJe suis le pere %d \t je vais faire la suite \n", getpid());
 }
