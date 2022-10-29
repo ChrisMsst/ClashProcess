@@ -9,5 +9,5 @@ ouvrir la fenêtre terminale:
 
 le programme generateur permet de créer les fichier .dat vide
 
-IL FAUDRA GARDER LE FICHIER: fonction_lecture.c
+IL FAUDRA GARDER LE FICHIER: fonction_read.c
 
