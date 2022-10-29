@@ -1,2 +1,8 @@
-# ClashProcess
-Elaboration d'un projet permettant à plusieurs processus de rentrer en conflit par l'intermédiaire de création de processus fils et de suppression de processus fils ennemis
+# fonction lecture
+
+ouvrir la fenêtre terminale:
+> make
+> ./test & ./test2
+
+le programme generateur permet de créer les fichier .dat vide
+
