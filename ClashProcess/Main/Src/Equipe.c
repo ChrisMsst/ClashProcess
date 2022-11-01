@@ -14,16 +14,15 @@ int main(int argc, char *argv[])
     char *argz[3]; // car il faut passer le nb de fichier en arguments
     argz[0] = "F";
     argz[2] = NULL;
-    int pid, stat, pid1, pid2, pid3, pid4; // On crée toutes les variables pour stocker les pids des fils
+    int pid, pid1, pid2, pid3, pid4; // On crée toutes les variables pour stocker les pids des fils
 
-    int alive = 5;
-    signal(SIGUSR1, reveil);
+    signal(SIGUSR1, reveil); // configuration du signal SIGUSR1 avec la fonction reveil
 
     pid = fork(); // création du premier fils
 
     if (pid == 0) // partie fils
     {
-        execv("F", argz);
+        execv("F", argz); // le fils execute le programme deja compilé qui à un binaire qui se nomme F
     }
     else // partie père
     {
@@ -35,24 +34,24 @@ int main(int argc, char *argv[])
         }
         else
         {
-            pause(); // le pere attend le signal de son fils pour en créer un autre
-            pid2 = fork();
+            pause();       // le pere attend le signal de son fils pour en créer un autre
+            pid2 = fork(); // création du second fils
             if (pid2 == 0)
             {
                 execv("F", argz);
             }
             else
             {
-                pause(); // le pere attend le signal de son fils pour en créer un autre
-                pid3 = fork();
+                pause();       // le pere attend le signal de son fils pour en créer un autre
+                pid3 = fork(); // création du troisieme fils
                 if (pid3 == 0)
                 {
                     execv("F", argz);
                 }
                 else
                 {
-                    pause(); // le pere attend le signal de son fils pour en créer un autre
-                    pid4 = fork();
+                    pause();       // le pere attend le signal de son fils pour en créer un autre
+                    pid4 = fork(); // création du quatrieme fils
                     if (pid4 == 0)
                     {
                         execv("F", argz);
@@ -60,36 +59,15 @@ int main(int argc, char *argv[])
                     else
                     {
                         pause(); // le pere attend le signal de son fils pour passer a autre chose
-                        printf("\n\n Je ssuis avant de partir dans l'autre fichier\n\n");
-                        // strcpy(argz[0], "P");// problème avec cette ligne cela fait un core dump
-                        //   execv("Pere", argz);
+                        printf("\n\n Je suis avant de partir dans l'autre fichier\n\n");
+                        argz[0] = "P"; // on modifie le nom du fichier pour aller dans celui du pere
+                        execv("P", argz);
                     }
                 }
             }
         }
-        printf("\nIl reste %d vie\n", alive);
-        wait(&stat);
-        alive--;
-        printf("\nIl reste %d vie\n", alive);
-        wait(&stat);
-        alive--;
-        printf("\nIl reste %d vie\n", alive);
-        wait(&stat);
-        alive--;
-        printf("\nIl reste %d vie\n", alive);
-        wait(&stat);
-        alive--;
-        printf("\nIl reste %d vie\n", alive);
-        wait(&stat);
-        alive--;
-        printf("\nIl reste %d vie\n", alive);
-        if (alive == 0)
-            printf("\nTous les fils sont morts !!!!!\n");
-        else
-            printf("\nDes fils sont encore en vie !!!!!\n");
-        return 0;
     }
-    printf("ici on est la hein ca marche");
+    return 0;
 }
 
 void reveil(int sig) // lorsque le fils envoie le signal c'est le pere qui execute cette partie
