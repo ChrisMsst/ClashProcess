@@ -87,7 +87,7 @@ int fonction_read(int nbfichier)
     else
     {
         fread(&lecturePID.pid, sizeof(ID_PID), 1, file); // lecture du ppid stocké dans le fichier
-        if (feof(file))                                   // le fichier est vide alors:
+        if (feof(file))                                  // le fichier est vide alors:
         {
             printf("Cible loupée\n");
             lecturePID.ppid = 1; // retour de la fonction sera 1

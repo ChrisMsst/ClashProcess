@@ -15,8 +15,8 @@ typedef struct ID_PID
 } ID_PID;
 
 // Déclaration de fonction
-int fonction_write(int max_fil, int Ppid, int Pid);//permet d'écrire le pid dans un fichier ou rien n'est écrit
-int alea(int nbfic);//Permet de sortir une valeur aléatoire
+int fonction_write(int max_fil, int Ppid, int Pid); // permet d'écrire le pid dans un fichier ou rien n'est écrit
+int alea(int nbfic);								// Permet de sortir une valeur aléatoire
 
 int main(int argc, char *argv[])
 {
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 	// 	printf("Je suis le fils %d il me reste %d sec avant d'envoyer un signal a mon pere %d\n", getpid(), 5 - i, getppid());
 	// 	sleep(1);
 	// }
-	fonction_write(10, getppid(), getpid());//le fils écrit son pid et le pid de son pere dans un fichier
+	fonction_write(10, getppid(), getpid()); // le fils écrit son pid et le pid de son pere dans un fichier
 
 	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
 	for (;;)
