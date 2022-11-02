@@ -21,11 +21,11 @@ int alea(int nbfic);//Permet de sortir une valeur aléatoire
 int main(int argc, char *argv[])
 {
 	srand(time(NULL));
-	for (int i = 0; i < 5; i++)
-	{
-		printf("Je suis le fils %d il me reste %d sec avant d'envoyer un signal a mon pere %d\n", getpid(), 5 - i, getppid());
-		sleep(1);
-	}
+	// for (int i = 0; i < 5; i++)
+	// {
+	// 	printf("Je suis le fils %d il me reste %d sec avant d'envoyer un signal a mon pere %d\n", getpid(), 5 - i, getppid());
+	// 	sleep(1);
+	// }
 	fonction_write(10, getppid(), getpid());//le fils écrit son pid et le pid de son pere dans un fichier
 
 	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	{
 		printf("Je suis le fils %d je suis en vie\n", getpid());
 		// printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
-		sleep(2);
+		sleep(5);
 	}
 }
 // Fonctions
