@@ -5,8 +5,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <fcntl.h>
-#include <time.h>
-#include <string.h>
 
 typedef struct ID_PID
 {
@@ -15,27 +13,9 @@ typedef struct ID_PID
 } ID_PID;
 
 // Déclaration de fonction
-int fonction_write(int max_fil, int Ppid, int Pid); // permet d'écrire le pid dans un fichier ou rien n'est écrit
-int alea(int nbfic);								// Permet de sortir une valeur aléatoire
+int fonction_write(int max_fil, int Ppid, int Pid);
+int alea(int nbfic);
 
-int main(int argc, char *argv[])
-{
-	srand(time(NULL));
-	// for (int i = 0; i < 5; i++)
-	// {
-	// 	printf("Je suis le fils %d il me reste %d sec avant d'envoyer un signal a mon pere %d\n", getpid(), 5 - i, getppid());
-	// 	sleep(1);
-	// }
-	fonction_write(10, getppid(), getpid()); // le fils écrit son pid et le pid de son pere dans un fichier
-
-	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
-	for (;;)
-	{
-		//printf("Je suis le fils %d je suis en vie\n", getpid());
-		// printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
-		sleep(5);
-	}
-}
 // Fonctions
 
 int alea(int nbfic)
@@ -45,6 +25,7 @@ int alea(int nbfic)
 	return aleanum;
 }
 
+///////////////////////
 int fonction_write(int max_fil, int Ppid, int Pid)
 {
 	char fichier[8];
@@ -58,7 +39,7 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 	printf(" Fonction write \n");
 	do
 	{
-		nb_fichier = alea(max_fil); // il faut faire -1 sinon ça crée une erreur de segmentation fault
+		nb_fichier = alea(max_fil - 1); // il faut faire -1 sinon ça crée une erreur de segmentation fault
 		printf(" Le numéro du fichier %d \n", nb_fichier);
 		// printf(" PPID %d \n",Ppid);
 		// printf(" PID %d \n",Pid);
@@ -105,4 +86,47 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 	} while (i == 0);
 
 	return nb_fichier;
+}
+
+int main(void)
+{
+
+	ID_PID stock_fil;
+	int max, write, i, j;
+	char fichier[8];
+	char fichier1[8];
+	FILE *file1 = NULL;
+	FILE *file = NULL;
+	printf(" Fonction principale \n");
+
+	for (i = 1; i <= 4; i++)
+	{
+
+		snprintf(fichier1, sizeof fichier1, "%d.dat", i);
+		file1 = fopen(fichier1, "w+b");
+		fclose(file1);
+	}
+	printf(" for = %d \n", i);
+	for (j = 0; j <= 4; j++)
+	{
+
+		max = i;
+		write = fonction_write(max, 30, 40);
+		printf(" Le numéro du fichier retourné %d \n", write);
+		snprintf(fichier, sizeof(fichier), "%d.dat", write);
+		file = fopen(fichier, "r+b");
+
+		if (file == NULL)
+		{
+			printf(" Le fichier est vide ou il n'existe pas \n");
+			fclose(file);
+		}
+
+		else
+		{
+			fread(&stock_fil, sizeof(stock_fil), 1, file);
+			printf("PPID = %d: PID = %d\n\n", stock_fil.ppid, stock_fil.pid);
+			fclose(file);
+		}
+	}
 }
