@@ -1,6 +1,7 @@
 #!/bin/bash
 
 rm *.dat
+rm E P F
 
 nbrEquipe=$(zenity --entry --title="Préparation du jeu" --text="Combien d'équipes vont se confronter?!")
 
@@ -11,10 +12,10 @@ do
 	touch $fichier.dat
 done
 
-for ((fichier=1; fichier<=2; fichier++ ))
-do  
-	touch PERE$fichier.dat
-done
+# for ((fichier=1; fichier<=2; fichier++ ))
+# do  
+# 	touch PERE$fichier.dat
+# done
 
 echo "Nous venons donc de créer "$nbrFichier" fichiers et nous avons "$nbrEquipe" équipes!"
 

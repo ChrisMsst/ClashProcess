@@ -31,9 +31,8 @@ int main(int argc, char *argv[])
 	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
 	for (;;)
 	{
-		//printf("Je suis le fils %d je suis en vie\n", getpid());
-		// printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
-		sleep(5);
+		// printf("Je suis le fils %d je suis en vie\n", getpid());
+		//  printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
 	}
 }
 // Fonctions
@@ -71,7 +70,6 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 			fclose(file);
 			i = 0;
 		}
-
 		else
 		{
 

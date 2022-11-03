@@ -17,8 +17,8 @@ typedef struct ID_PID
 // Déclaration de fonction
 int fonction_read(int nbfichier); // permet de lire le pid dans un fichier
 int alea(int nbfic);              // Permet de sortir une valeur aléatoire
-int pidpereL(void);                // lis le pid du pere adverse
-void reveil(int sig);
+// int pidpereL(void);               // lis le pid du pere adverse
+// void reveil(int sig);
 
 int main(int argc, char *argv[])
 {
@@ -27,18 +27,21 @@ int main(int argc, char *argv[])
     int compteur_kill = 0;
     int compteur_max = (atoi(argv[1]) - 1) * 5;
 
-    //signal(SIGUSR1, reveil); // configuration du signal SIGUSR1 avec la fonction reveil
+    // signal(SIGUSR1, reveil); // configuration du signal SIGUSR1 avec la fonction reveil
 
     printf("argv:%s\n", argv[1]);
     printf("MAX= %d //////////\n", compteur_max);
-    
-   // kill(pidpereL(), SIGUSR1);
-    printf("\nPere %d : J'attends le signal de l'autre pere!!!\n", getpid());
-    //pause();
+
+    // kill(pidpereL(), SIGUSR1);
+    // printf("\nPere %d : J'attends le signal de l'autre pere!!!\n", getpid());
+    // pause();
+    for (int i = 40; i > 0; i--)
+        sleep(1);
 
     for (int i = 5; i > 0; i--)
     {
-        do
+
+        while (wait(&stat) == 0)
         {
             pidadv = fonction_read(compteur_max * atoi(argv[1]));
 
@@ -61,7 +64,7 @@ int main(int argc, char *argv[])
             }
 
             sleep(2);
-        } while (wait(&stat) == 0);
+        }
         alive--;                                                  // decrémante le nombre de fils en vie
         printf("\nPere %d : Il reste %d vie\n", getpid(), alive); // affiche le nombre de fils qu'il reste en vies
     }
@@ -117,51 +120,51 @@ int alea(int nbfic) // fonction qui tire un nombre aléatoire entre 1 et le nomb
     return aleanum;
 }
 
-int pidpereL(void)
-{
-    FILE *file;
-    int pidpere;
+// int pidpereL(void)
+// {
+//     FILE *file;
+//     int pidpere;
 
-    file = fopen("PERE1.dat", "r+b");
-    if (file == NULL)
-    {
-        printf("/!\\ fichier PERE1.dat inexistant\n");
-        fclose(file);
-        exit(1);
-    }
-    else
-    {
-        fread(&pidpere, sizeof(int), 1, file); // lecture du ppid stocké dans le fichier
-        fclose(file);
-        if (feof(file)) // le fichier est vide alors:
-        {
-            printf("Pere %d : Mauvais fichier\n", getpid());
-        }
-        else
-        {
-            if (pidpere == getpid()) // le ppid du pere adverse trouvé est différent du pid du père qui execute cette fonction
-            {
-                file = fopen("PERE2.dat", "r+b");
-                if (file == NULL)
-                {
-                    printf("/!\\ fichier PERE2.dat inexistant\n");
-                    fclose(file);
-                    exit(1);
-                }
-                else
-                {
-                    fread(&pidpere, sizeof(int), 1, file); // lecture du ppid stocké dans le fichier
-                    fclose(file);
-                    if (pidpere == getpid()) // le ppid du pere adverse trouvé est différent du pid du père qui execute cette fonction
-                        pidpere = 0;
-                }
-            }
-        }
-    }
-    return (pidpere);
-}
+//     file = fopen("PERE1.dat", "r+b");
+//     if (file == NULL)
+//     {
+//         printf("/!\\ fichier PERE1.dat inexistant\n");
+//         fclose(file);
+//         exit(1);
+//     }
+//     else
+//     {
+//         fread(&pidpere, sizeof(int), 1, file); // lecture du ppid stocké dans le fichier
+//         fclose(file);
+//         if (feof(file)) // le fichier est vide alors:
+//         {
+//             printf("Pere %d : Mauvais fichier\n", getpid());
+//         }
+//         else
+//         {
+//             if (pidpere == getpid()) // le ppid du pere adverse trouvé est différent du pid du père qui execute cette fonction
+//             {
+//                 file = fopen("PERE2.dat", "r+b");
+//                 if (file == NULL)
+//                 {
+//                     printf("/!\\ fichier PERE2.dat inexistant\n");
+//                     fclose(file);
+//                     exit(1);
+//                 }
+//                 else
+//                 {
+//                     fread(&pidpere, sizeof(int), 1, file); // lecture du ppid stocké dans le fichier
+//                     fclose(file);
+//                     if (pidpere == getpid()) // le ppid du pere adverse trouvé est différent du pid du père qui execute cette fonction
+//                         pidpere = 0;
+//                 }
+//             }
+//         }
+//     }
+//     return (pidpere);
+// }
 
-void reveil(int sig) // lorsque le fils envoie le signal c'est le pere qui execute cette partie
-{
-    printf("\nJe suis le pere %d \t je vais faire la suite \n", getpid());
-}
+// void reveil(int sig) // lorsque le fils envoie le signal c'est le pere qui execute cette partie
+// {
+//     printf("\nJe suis le pere %d \t je vais faire la suite \n", getpid());
+// }
