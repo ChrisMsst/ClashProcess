@@ -8,6 +8,7 @@
 #include <string.h>
 
 void reveil(int sig);
+void pidpereW(void);//ecrit le pid du pere dans un fichier
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     int pid, pid1, pid2, pid3, pid4; // On crée toutes les variables pour stocker les pids des fils
 
     signal(SIGUSR1, reveil); // configuration du signal SIGUSR1 avec la fonction reveil
+    pidpereW();
 
     pid = fork(); // création du premier fils
 
@@ -75,4 +77,48 @@ int main(int argc, char *argv[])
 void reveil(int sig) // lorsque le fils envoie le signal c'est le pere qui execute cette partie
 {
     printf("\nJe suis le pere %d \t je vais faire la suite \n", getpid());
+}
+
+
+void pidpereW(void)
+{
+    int stock_fil;
+    int pidpere;
+    FILE *file;
+
+    file = fopen("PERE1.dat", "r+b"); // on ouvre le fichier que l'on vient de tirer au hasard
+    if (file == NULL)
+    {
+        printf(" Erreur d'ouverture du fichier \n");
+        fclose(file);
+    }
+    else
+    {
+        fread(&pidpere, sizeof(int), 1, file); // lecture du ppid stocké dans le fichier
+        if (!feof(file))
+        {
+            fclose(file);
+            file = fopen("PERE2.dat", "r+b");
+
+            if (file == NULL)
+            {
+                printf(" Erreur d'ouverture du fichier \n");
+                fclose(file);
+            }
+            else
+            {
+                printf("Le fichier PERE2 est vide on peut écrire \n");
+                stock_fil = getpid();
+                fwrite(&stock_fil, sizeof(stock_fil), 1, file);
+                fclose(file);
+            }
+        }
+        else
+        {
+            printf("Le fichier PERE1 est vide on peut écrire \n");
+            stock_fil = getpid();
+            fwrite(&stock_fil, sizeof(int), 1, file);
+            fclose(file);
+        }
+    }
 }

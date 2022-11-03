@@ -11,6 +11,11 @@ do
 	touch $fichier.dat
 done
 
+for ((fichier=1; fichier<=2; fichier++ ))
+do  
+	touch PERE$fichier.dat
+done
+
 echo "Nous venons donc de créer "$nbrFichier" fichiers et nous avons "$nbrEquipe" équipes!"
 
 gcc Fils.c -o F
