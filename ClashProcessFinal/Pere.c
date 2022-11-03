@@ -29,15 +29,15 @@ int main(int argc, char *argv[])
 
     // signal(SIGUSR1, reveil); // configuration du signal SIGUSR1 avec la fonction reveil
 
-    printf("argv:%s\n", argv[1]);
-    printf("MAX= %d //////////\n", compteur_max);
+    // printf("argv:%s\n", argv[1]);
+    // printf("MAX= %d //////////\n", compteur_max);
 
     // kill(pidpereL(), SIGUSR1);
     // printf("\nPere %d : J'attends le signal de l'autre pere!!!\n", getpid());
     // pause();
+    printf("\nPere %d : Patienter 10 sec\n", getpid());
     for (int i = 10; i > 0; i--)
     {
-        printf("\nIl reste %d sec", i);
         sleep(1);
     }
 
@@ -67,12 +67,12 @@ int main(int argc, char *argv[])
             }
 
             sleep(2);
-        }while (wait(&stat) == 0);
+        } while (wait(&stat) == 0);
         alive--;                                                  // decrémante le nombre de fils en vie
         printf("\nPere %d : Il reste %d vie\n", getpid(), alive); // affiche le nombre de fils qu'il reste en vies
     }
     if (alive == 0)
-        printf("\nPere %d : Tous les fils sont morts !!!!!\n", getpid());
+        printf("\nPere %d : Tous mes fils sont morts !!!!!\n", getpid());
     else
         printf("\nPere %d : Des fils sont encore en vie !!!!!\n", getpid());
 }
@@ -93,7 +93,7 @@ int fonction_read(int nbfichier)
     {
         fread(&lecturePID, sizeof(ID_PID), 1, file); // lecture du ppid stocké dans le fichier
         fclose(file);
-        printf("Pere %d : !!!!!!!!! le pid du pere du fichier est : %d \t et du fils : %d !!!!!!!!!!\n", getpid(), lecturePID.ppid, lecturePID.pid);
+        //printf("Pere %d : !!!!!!!!! le pid du pere du fichier est : %d \t et du fils : %d !!!!!!!!!!\n", getpid(), lecturePID.ppid, lecturePID.pid);
         if (feof(file)) // le fichier est vide alors:
         {
             printf("Pere %d : Cible loupée\n", getpid());

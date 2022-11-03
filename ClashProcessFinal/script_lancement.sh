@@ -3,7 +3,7 @@
 rm *.dat
 rm E P F
 
-nbrEquipe=$(zenity --scale --text="Combien d'équipes voulez-vous?" --value=0 --max-value=10)
+nbrEquipe=$(zenity --scale --text="Combien d'équipes voulez-vous?" --value=2 --min-value=2 --max-value=10)
 
 nbrFichier=$((6*$nbrEquipe))
 
@@ -28,4 +28,5 @@ for((equipe=0; equipe<nbrEquipe; equipe++))
 do
 	./E $nbrEquipe &
 	echo "Equipe n°$equipe" 
+	sleep 0.5
 done

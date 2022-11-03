@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                         pause(); // le pere attend le signal de son fils pour passer a autre chose
                         printf("\n\n Je suis avant de partir dans l'autre fichier\n\n");
                         argz[0] = "P"; // on modifie le nom du fichier pour aller dans celui du pere
-                        printf("ARGZ:%s\n", argz[1]);
+                        // printf("ARGZ:%s\n", argz[1]);
                         execv("P", argz);
                         // execl("/bin/xterm", "bin/xterm", "-e", "./P", argz, NULL);
                     }

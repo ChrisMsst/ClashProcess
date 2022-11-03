@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
 	fonction_write(6 * atoi(argv[1]), getppid(), getpid()); // le fils écrit son pid et le pid de son pere dans un fichier
 
 	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
-	while(1)
+	while (1)
 	{
-		//printf("\nFils %d P %d : Coucou je suis en vie ",getpid(), getppid());
+		// printf("\nFils %d P %d : Coucou je suis en vie ",getpid(), getppid());
 		sleep(2);
 		// printf("Je suis le fils %d je suis en vie\n", getpid());
 		//  printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
@@ -56,19 +56,19 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 	FILE *file;
 	// char file1[20];
 	int read;
-	printf(" Fonction write \n");
+	// printf(" Fonction write \n");
 	do
 	{
 		nb_fichier = alea(max_fil); // il faut faire -1 sinon ça crée une erreur de segmentation fault
-		printf(" Le numéro du fichier %d \n", nb_fichier);
-		// printf(" PPID %d \n",Ppid);
-		// printf(" PID %d \n",Pid);
+		// printf(" Le numéro du fichier %d \n", nb_fichier);
+		//  printf(" PPID %d \n",Ppid);
+		//  printf(" PID %d \n",Pid);
 		snprintf(fichier, sizeof(fichier), "%d.dat", nb_fichier); // on met le nombre que l'on vient de tirer au hasard en nom de fichier ex: 2.dat
 
 		file = fopen(fichier, "r+b"); // on ouvre le fichier que l'on vient de tirer au hasard
 		if (file == NULL)
 		{
-			printf(" Recherche du bon fichier \n");
+			// printf(" Recherche du bon fichier \n");
 			fclose(file);
 			i = 0;
 		}
@@ -76,16 +76,16 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 		{
 
 			read = fread(&stock_fil, sizeof(stock_fil), 1, file);
-			printf(" fread = %d\n", read);
+			// printf(" fread = %d\n", read);
 			if (read == 1)
 			{
-				printf("Le fichier est déjà écrit \n");
+				// printf("Le fichier est déjà écrit \n");
 				i = 0;
 				fclose(file);
 			}
 			else
 			{
-				printf("Le fichier est vide on peut écrire \n");
+				// printf("Le fichier est vide on peut écrire \n");
 				stock_fil.ppid = Ppid;
 				stock_fil.pid = Pid;
 				ecriture = fwrite(&stock_fil, sizeof(stock_fil), 1, file);
@@ -97,7 +97,7 @@ int fonction_write(int max_fil, int Ppid, int Pid)
 				}
 				else
 				{
-					printf(" Ecriture ok \n");
+					// printf(" Ecriture ok \n");
 				}
 				fclose(file);
 			}
