@@ -38,20 +38,21 @@ int main(int argc, char *argv[])
 
         if (pidadv == 0)
         {
-            printf("\nfichier d'un fils : %d\n", pidadv);
+            printf("\nPere %d : fichier d'un fils : %d\n", getpid(), pidadv);
         }
         else
         {
             if (pidadv == 1)
             {
-                printf("\nLe fichier est vide !!!!\n");
+                printf("\nPere %d : Le fichier est vide !!!!\n", getpid());
             }
             else
             {
-                printf("\nJe tire sur ma cible : %d\n", pidadv);
+                printf("\nPere %d : Je tire sur ma cible : %d\n", getpid(), pidadv);
                 kill(pidadv, SIGKILL);
                 compteur_kill++;
             }
+            sleep(2);
         }
 
         sleep(1);

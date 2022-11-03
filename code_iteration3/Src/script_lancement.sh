@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm *.dat
+
 nbrEquipe=$(zenity --entry --title="Préparation du jeu" --text="Combien d'équipes vont se confronter?!")
 
 nbrFichier=$((6*$nbrEquipe))
