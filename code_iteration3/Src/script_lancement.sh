@@ -22,4 +22,5 @@ for((equipe=0; equipe<nbrEquipe; equipe++))
 do
 	./E $nbrEquipe &
 	echo "Equipe n°$equipe" 
+	sleep 1
 done

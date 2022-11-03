@@ -8,11 +8,8 @@ void verif(int nbmax);
 
 int main(void)
 {
-    srand(time(NULL));
-    int max;
-    printf("\nEntrer le nombre max du alea\n");
-    scanf("%d", &max);
-    printf("\nLe nom de votre fichier est : %d \n", alea(max));
+    int max = 10;
+    printf("\nProgramme %d : Le nom de votre fichier est : %d \n",getpid(), alea(max));
 
     verif(max);
 
@@ -21,6 +18,7 @@ int main(void)
 
 int alea(int nbfic)
 {
+    srand(time(NULL));
     int aleanum;
     aleanum = rand() % nbfic + 1;
     return aleanum;
@@ -32,8 +30,8 @@ void verif(int nbmax)
     while (randomnb <= nbmax)
     {
         randomnb = alea(nbmax);
-        printf("\nLe nom de votre fichier est : %d \n", randomnb);
+        printf("\nProgramme %d :Le nom de votre fichier est : %d \n",getpid(), randomnb);
         sleep(1);
     }
-    printf("\npas bon !!!!\n");
+    printf("\nProgramme %d :pas bon !!!!\n",getpid());
 }
