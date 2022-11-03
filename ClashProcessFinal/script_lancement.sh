@@ -3,7 +3,7 @@
 rm *.dat
 rm E P F
 
-nbrEquipe=$(zenity --entry --title="Préparation du jeu" --text="Combien d'équipes vont se confronter?!")
+nbrEquipe=$(zenity --scale --text="Combien d'équipes voulez-vous?" --value=0 --max-value=10)
 
 nbrFichier=$((6*$nbrEquipe))
 
