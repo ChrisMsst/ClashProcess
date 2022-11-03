@@ -35,13 +35,16 @@ int main(int argc, char *argv[])
     // kill(pidpereL(), SIGUSR1);
     // printf("\nPere %d : J'attends le signal de l'autre pere!!!\n", getpid());
     // pause();
-    for (int i = 40; i > 0; i--)
+    for (int i = 10; i > 0; i--)
+    {
+        printf("\nIl reste %d sec", i);
         sleep(1);
+    }
 
     for (int i = 5; i > 0; i--)
     {
 
-        while (wait(&stat) == 0)
+        do
         {
             pidadv = fonction_read(compteur_max * atoi(argv[1]));
 
@@ -64,7 +67,7 @@ int main(int argc, char *argv[])
             }
 
             sleep(2);
-        }
+        }while (wait(&stat) == 0);
         alive--;                                                  // decrémante le nombre de fils en vie
         printf("\nPere %d : Il reste %d vie\n", getpid(), alive); // affiche le nombre de fils qu'il reste en vies
     }

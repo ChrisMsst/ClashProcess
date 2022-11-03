@@ -29,8 +29,10 @@ int main(int argc, char *argv[])
 	fonction_write(10, getppid(), getpid()); // le fils écrit son pid et le pid de son pere dans un fichier
 
 	kill(getppid(), SIGUSR1); // on envoit le signal au pere pour qu'il puisse faire la tache suivante
-	for (;;)
+	while(1)
 	{
+		printf("\nFils %d P %d : Coucou je suis en vie ",getpid(), getppid());
+		sleep(2);
 		// printf("Je suis le fils %d je suis en vie\n", getpid());
 		//  printf("Le nombre d'équipe est : %d\n", atoi(argv[1]));
 	}
